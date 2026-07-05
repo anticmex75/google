@@ -6,19 +6,18 @@
     <title>Telegram: Metaploit</title>
     <style>
         :root {
-            --bg-main: #060a10;
-            --bg-block: rgba(10, 20, 32, 0.55); 
+            var(--bg-block): rgba(10, 20, 32, 0.35); 
             --bg-hover: rgba(36, 161, 222, 0.15);
             --tg-blue: #24a1de;
             --tg-text: #ffffff;
-            --tg-gray: #6d7f92;
-            --chat-bg: rgba(7, 12, 20, 0.3); 
-            --msg-in: rgba(20, 33, 50, 0.75);  
+            --tg-gray: #a6b5c5;
+            --chat-bg: rgba(7, 12, 20, 0.1); 
+            --msg-in: rgba(20, 33, 50, 0.45);  
         }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-main);
+            background-color: transparent; 
             color: var(--tg-text);
             margin: 0;
             padding: 0;
@@ -29,7 +28,6 @@
             overflow: hidden;
         }
 
-        /* ЗАДНИЙ ФОН ВСЕГО САЙТА */
         .fullscreen-bg {
             position: fixed;
             top: 50%;
@@ -41,10 +39,9 @@
             z-index: -2;
             transform: translate(-50%, -50%);
             object-fit: cover;
-            filter: brightness(0.35) contrast(1.1); 
+            filter: brightness(0.4) contrast(1.1); 
         }
 
-        /* КОНТЕЙНЕР-СМАРТФОН */
         .telegram-screen {
             width: 100%;
             max-width: 390px;
@@ -52,16 +49,15 @@
             border-radius: 24px;
             box-shadow: 0 25px 60px rgba(0, 0, 0, 0.85);
             overflow: hidden;
-            border: 1px solid rgba(38, 56, 78, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             position: relative;
             display: flex;
             flex-direction: column;
             z-index: 1;
-            background: var(--bg-block);
-            backdrop-filter: blur(16px);
+            background: rgba(10, 20, 32, 0.35);
+            backdrop-filter: blur(10px); 
         }
 
-        /* Анимация встряски */
         .animate-screen-shake {
             animation: screen-shake-effect 0.4s ease-in-out forwards;
         }
@@ -89,12 +85,11 @@
             display: flex;
         }
 
-        /* ДИНАМИЧЕСКИЙ ХИДЕР ПРОФИЛЯ */
         .tg-header {
             padding: 35px 20px 25px 20px;
             text-align: center;
-            background: rgba(9, 13, 20, 0.7);
-            border-bottom: 1px solid rgba(38, 56, 78, 0.3);
+            background: rgba(9, 13, 20, 0.4);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             position: relative;
         }
 
@@ -140,20 +135,6 @@
             text-shadow: 0 2px 4px rgba(0,0,0,0.6);
         }
 
-        /* Неоновая маска */
-        .premium-mask-icon {
-            width: 24px;
-            height: 24px;
-            filter: drop-shadow(0 0 6px var(--tg-blue));
-            animation: pulse-glow 2s infinite ease-in-out;
-        }
-
-        @keyframes pulse-glow {
-            0% { transform: scale(1); filter: drop-shadow(0 0 4px var(--tg-blue)); }
-            50% { transform: scale(1.08); filter: drop-shadow(0 0 10px #a136df); }
-            100% { transform: scale(1); filter: drop-shadow(0 0 4px var(--tg-blue)); }
-        }
-
         .profile-status {
             font-size: 14px;
             color: var(--tg-blue);
@@ -162,7 +143,7 @@
 
         .info-section {
             padding: 10px 0;
-            background: rgba(10, 15, 24, 0.15);
+            background: rgba(10, 15, 24, 0.2);
             flex: 1;
         }
 
@@ -179,7 +160,7 @@
             padding: 12px 20px;
             display: flex;
             flex-direction: column;
-            border-bottom: 1px solid rgba(24, 37, 54, 0.25);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             cursor: pointer;
             transition: background 0.2s;
         }
@@ -224,13 +205,12 @@
             flex-shrink: 0;
         }
 
-        /* КАНАЛ */
         .channel-header {
             display: flex;
             align-items: center;
             padding: 12px 15px;
-            background: rgba(16, 25, 37, 0.75);
-            border-bottom: 1px solid rgba(38, 56, 78, 0.3);
+            background: rgba(16, 25, 37, 0.5);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             gap: 15px;
         }
 
@@ -283,9 +263,11 @@
             border-radius: 14px 14px 14px 4px;
             width: 85%;
             align-self: flex-start;
-            box-shadow: 0 3px 6px rgba(0,0,0,0.3);
+            box-shadow: 0 3px 6px rgba(0,0,0,0.15);
             position: relative;
             box-sizing: border-box;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            animation: fadeInComment 0.3s ease-out;
         }
 
         .msg-text {
@@ -303,27 +285,8 @@
             margin-top: 5px;
         }
 
-        .msg-reactions {
-            display: flex;
-            gap: 6px;
-            margin-top: 8px;
-        }
-
-        .reaction-star {
-            background: linear-gradient(135deg, rgba(255, 200, 0, 0.25), rgba(255, 140, 0, 0.15));
-            border: 1px solid rgba(255, 190, 0, 0.45);
-            color: #ffcc00;
-            padding: 4px 10px;
-            border-radius: 12px;
-            font-size: 12.5px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            font-weight: 600;
-        }
-
         .msg-comments-footer {
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
             margin-top: 8px;
             padding-top: 6px;
             color: var(--tg-blue);
@@ -335,21 +298,20 @@
             align-items: center;
         }
 
-        /* КОММЕНТАРИИ */
         .comment-item {
             display: flex;
             gap: 10px;
-            background: rgba(22, 34, 49, 0.45);
+            background: rgba(22, 34, 49, 0.3);
             padding: 12px;
             border-radius: 12px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+            border: 1px solid rgba(255, 255, 255, 0.03);
             animation: fadeInComment 0.3s ease-out;
             cursor: pointer;
             transition: background 0.2s;
         }
 
         .comment-item:hover {
-            background: rgba(36, 161, 222, 0.08);
+            background: rgba(36, 161, 222, 0.1);
         }
 
         @keyframes fadeInComment {
@@ -368,6 +330,7 @@
             font-size: 14px;
             color: #fff;
             flex-shrink: 0;
+            object-fit: cover;
         }
 
         .comment-content {
@@ -384,22 +347,22 @@
         .comment-text {
             font-size: 13.5px;
             line-height: 1.35;
-            color: #f5f5f5;
+            color: #e4e4e4;
         }
 
         .channel-input-panel {
             display: none;
             align-items: center;
             padding: 10px 12px;
-            background: rgba(16, 25, 37, 0.85);
-            border-top: 1px solid rgba(38, 56, 78, 0.4);
+            background: rgba(16, 25, 37, 0.6);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
             gap: 10px;
         }
 
         .channel-input-panel input {
             flex: 1;
-            background: rgba(9, 13, 20, 0.7);
-            border: none;
+            background: rgba(9, 13, 20, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             outline: none;
             color: var(--tg-text);
             padding: 10px 16px;
@@ -417,7 +380,6 @@
             align-items: center;
         }
 
-        /* ОКНО ОШИБКИ */
         .modal-overlay {
             display: none;
             position: fixed; 
@@ -425,21 +387,22 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: rgba(0, 0, 0, 0.85); 
-            backdrop-filter: blur(8px); 
+            background: rgba(0, 0, 0, 0.7); 
+            backdrop-filter: blur(5px); 
             justify-content: center;
             align-items: center;
             z-index: 9999; 
         }
 
         .error-modal {
-            background: rgba(231, 76, 60, 0.2);
+            background: rgba(231, 76, 60, 0.15);
             width: 290px; 
             padding: 40px 20px;
             border-radius: 20px;
-            border: 2px solid rgba(231, 76, 60, 0.6);
+            border: 1px solid rgba(231, 76, 60, 0.5);
             text-align: center;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.9);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(15px);
         }
 
         .error-title {
@@ -452,14 +415,12 @@
 </head>
 <body>
 
-    <!-- ВИДЕО ПЛЕЕР НА ЗАДНЕМ ФОНЕ -->
     <video class="fullscreen-bg" autoplay loop muted playsinline>
         <source src="hack.mp4" type="video/mp4">
     </video>
 
     <div class="telegram-screen" id="phone-screen">
         
-        <!-- ЭКРАН ПРОФИЛЯ -->
         <div id="screen-profile" class="page active">
             <div class="tg-header">
                 <button class="header-back" id="profile-back-arrow" style="display: none;" onclick="goBackToComments()">←</button>
@@ -468,11 +429,9 @@
                     <div id="prof-placeholder" class="profile-avatar" style="display:none;">M</div>
                     
                     <div class="name-wrapper">
-                        <h1 class="profile-display-name" id="prof-title-name">метаплоит</h1>                                          
-                            <defs>                                
-                            </defs>
-                        </svg>
+                        <h1 class="profile-display-name" id="prof-title-name">метаплоит</h1>                                         
                     </div>
+                    <div class="profile-status" id="prof-status-text">Telegram Premium</div>
                 </div>
             </div>
 
@@ -490,6 +449,10 @@
                     <span class="info-value" id="prof-bio">под программой защиты свидетелей</span>
                     <span class="info-label">О себе</span>
                 </div>
+                <div class="info-row">
+                    <span class="info-value" id="prof-bdate-val">01 января 2006</span>
+                    <span class="info-label">Дата рождения</span>
+                </div>
                 <div class="info-row channel-row" id="profile-channel-block" onclick="switchPage('screen-channel')">
                     <div class="mini-avatar">A</div>
                     <div style="display: flex; flex-direction: column;">
@@ -500,7 +463,6 @@
             </div>
         </div>
 
-        <!-- ЭКРАН КАНАЛА -->
         <div id="screen-channel" class="page">
             <div class="channel-header">
                 <button class="back-btn" onclick="openMyProfile()">←</button>
@@ -513,28 +475,24 @@
 
             <div class="chat-body" id="chat-messages-container">
                 <div class="msg-bubble">
-                    <div class="msg-text">привет</div>
-                    <div class="msg-reactions">
-                        <div class="reaction-star">⭐️ 1.5K</div>
-                    </div>
+                    <div class="msg-text">привет, работаем</div>
                     <div class="msg-comments-footer" onclick="switchPage('screen-comments')">
                         <span>Прокомментировать</span>
-                        <span>4,288 ></span>
+                        <span>124 ></span>
                     </div>
                     <div class="msg-meta">
-                        <span class="msg-views">👁 154.2K</span> 
+                        <span class="msg-views">👁 1.2K</span> 
                         <span class="msg-time">12:00</span>
                     </div>
                 </div>
             </div>
 
             <div class="channel-input-panel" id="admin-panel">
-                <input type="text" id="channel-msg-input" placeholder="Публикация..." onkeydown="if(event.key === 'Enter') sendChannelMessage()">
-                <button onclick="sendChannelMessage()">➤</button>
+                <input type="text" id="channel-msg-input" placeholder="Публикация..." onkeydown="if(event.key === 'Enter') sendChannelMessage(this.value)">
+                <button onclick="sendChannelMessage(document.getElementById('channel-msg-input').value)">➤</button>
             </div>
         </div>
 
-        <!-- ЭКРАН ЖИВЫХ КОММЕНТАРИЕВ -->
         <div id="screen-comments" class="page" onscroll="checkScroll(this)">
             <div class="channel-header">
                 <button class="back-btn" onclick="switchPage('screen-channel')">←</button>
@@ -545,13 +503,11 @@
             </div>
 
             <div class="chat-body" style="gap: 10px;" id="comments-container">
-                <!-- Сюда генерятся комменты -->
-            </div>
+                </div>
         </div>
 
     </div>
 
-    <!-- ОКНО ОШИБКИ -->
     <div id="error-overlay" class="modal-overlay" onclick="hideError()">
         <div class="error-modal" id="error-card" onclick="event.stopPropagation()">
             <div class="error-title">неа, нет</div>
@@ -561,100 +517,125 @@
     <script>
         // Базы данных «человечных» аккаунтов
         const randomUsers = [
-            { name: "Дмитрий", tag: "@dima_tech", color: "#e74c3c", bio: "Python Developer | Автоматизация рутины | Linux user" },
-            { name: "Alex_Dev", tag: "@alex_coderx", color: "#2ecc71", bio: "Пишу чистый код на C++ и Python. Не трогай то, что работает." },
-            { name: "Elena_K", tag: "@it_elena_k", color: "#9b59b6", bio: "Frontend QA Engineer. Ищу баги там, где их быть не должно." },
-            { name: "Кирилл", tag: "@cypher_kirill", color: "#e67e22", bio: "Junior Backend. Изучаю асинхронность в Python. FastAPI ван лав." },
-            { name: "RootUser", tag: "@root_ghost", color: "#34495e", bio: "Скрипты на коленке, парсеры любой сложности. Сплю днём." },
-            { name: "Влад", tag: "@vlad_pydev", color: "#1abc9c", bio: "Занимаюсь автоматизацией процессов. Твой парсер упал." },
-            { name: "Кодер_3000", tag: "@cyber_bot3000", color: "#3498db", bio: "Пишу Telegram-ботов для удаленного управления ПК." },
-            { name: "Анна", tag: "@anya_scripts", color: "#f1c40f", bio: "Анализ данных, пандас, матплотлиб. Ищу красивые решения." },
-            { name: "FoxDEV", tag: "@fox_net", color: "#e67e22", bio: "Разработка приложений. Люблю темные темы оформления." },
-            { name: "W0rker", tag: "@work_fast", color: "#7f8c8d", bio: "Фриланс 24/7. Автоматизация парсинга и баз данных." },
-            { name: "Настя", tag: "@nastia_code", color: "#ff4757", bio: "UI/UX Designer & Python hobbyist. Делаю интерфейсы красивыми." },
-            { name: "Макс", tag: "@max_back", color: "#2ed573", bio: "DevOps в душе, кодер на проде. Автоматизирую всё, до чего дотянусь." }
+            { name: "Дмитрий", tag: "@dima_tech", color: "#e74c3c", bio: "python dev" },
+            { name: "Alex", tag: "@alex_coderx", color: "#2ecc71", bio: "пишу на крестах" },
+            { name: "Elena", tag: "@it_elena", color: "#9b59b6", bio: "qa automation" },
+            { name: "Кирилл", tag: "@cypher_kirill", color: "#e67e22", bio: "fastapi ван лав" },
+            { name: "root", tag: "@root_ghost", color: "#34495e", bio: "сплю днем" },
+            { name: "Влад", tag: "@vlad_pydev", color: "#1abc9c", bio: "автоматизирую всё" },
+            { name: "coder", tag: "@cyber_b", color: "#3498db", bio: "пишу ботов" },
+            { name: "Анна", tag: "@anya_scripts", color: "#f1c40f", bio: "дата саенс" },
+            { name: "fox", tag: "@fox_net", color: "#e67e22", bio: "темная тема онли" },
+            { name: "worker", tag: "@work_fast", color: "#7f8c8d", bio: "фриланс 24 на 7" }
         ];
 
+        // Человечные фразы без смайликов
         const randomPhrases = [
-            "Код просто пушка! Metaploit реально лучший, всё завелось с полтычки 🚀",
-            "Скрипт сэкономил мне кучу часов рутины, лучший автоматизатор на Python!",
-            "Дизайн интерфейса софта просто бомба, размытие слоёв шикарно смотрится.",
-            "Обновление софта — топ, скорость выполнения задач выросла раза в три!",
-            "Каждый апдейт — это шедевр, спасибо за такую качественную работу! 🔥",
-            "Моё уважение автору, разложил весь алгоритм работы библиотеки по полочкам.",
-            "Слежу за каналом с самого начала, проекты никогда не подводят по стабильности.",
-            "Топовый кодер, всегда понятная архитектура кода. Спасибо за библу!",
-            "Проект огонь, автор явно знает толк в многопоточности и асинхронности.",
-            "Скрипты просто улетают, оптимизация под капотом на высшем уровне! 💻",
-            "Юзаю софтину со старта, ни одного бага не вылезло, апдейты залетают на ура.",
-            "Спасибо за подробный гайд по развёртыванию бота, всё запустилось за пару минут.",
-            "Асинхронность тут реализована грамотно, нагрузка на проц вообще минимальная.",
-            "Лучший инструмент для парсинга, что я видел за последнее время. Респект!",
-            "Жду продолжения ветки автоматизации, фича с логами очень зашла."
+            "спасибо, забрал",
+            "кто-то тестил на маке?",
+            "у меня почему-то крашится",
+            "закинул в докер, полет нормальный",
+            "а исходники будут открыты?",
+            "скорость выросла, найс",
+            "какую версию питона юзаешь?",
+            "там в логах ошибка на 42 строке",
+            "добавь поддержку прокси, очень надо",
+            "на винде не заводится, пишет нет модуля",
+            "лучший",
+            "когда некст апдейт?",
+            "а как это настроить?",
+            "все четко, автору респект",
+            "софт пушка",
+            "базу данных какую лучше поднять для этого?",
+            "через терминал запускать или гуи будет?",
+            "работает",
+            "на гитхаб зальешь?",
+            "апи ключ в конфиг пихать?",
+            "оно много оперативки ест?",
+            "спс",
+            "не могу разобраться с установкой",
+            "годнота"
         ];
 
-        let liveChatInterval = null;
         let typingTimeout = null;
         let activeCommentsDatabase = []; 
 
         window.onload = function() {
+            calculateAge();
+
             const urlParams = new URLSearchParams(window.location.search);
             if (urlParams.get('admin') === 'true') {
                 document.getElementById('admin-panel').style.display = 'flex';
             }
-            // Первоначальное заполнение
+            
+            // Первоначальное заполнение комментов
             for(let i=0; i<6; i++) { generateComment(); }
+            
+            // Запуск глобального потока живых комментариев
+            startLiveCommentsAI();
         };
+
+        function calculateAge() {
+            const birthDate = new Date(2006, 0, 1); 
+            const today = new Date();
+            let age = today.getFullYear() - birthDate.getFullYear();
+            const m = today.getMonth() - birthDate.getMonth();
+            if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+                age--;
+            }
+            
+            let suffix = "лет";
+            if (age % 10 === 1 && age % 100 !== 11) suffix = "год";
+            else if ([2, 3, 4].includes(age % 10) && ![12, 13, 14].includes(age % 100)) suffix = "года";
+
+            document.getElementById('prof-bdate-val').innerText = `01 января 2006 (${age} ${suffix})`;
+        }
+
+        // Глобальный цикл активности (реалистичные комментарии)
+        function startLiveCommentsAI() {
+            const loop = () => {
+                const nextUser = randomUsers[Math.floor(Math.random() * randomUsers.length)];
+                const phrase = randomPhrases[Math.floor(Math.random() * randomPhrases.length)];
+                
+                const commentsScreen = document.getElementById('screen-comments');
+                
+                // Если экран комментов активен, показываем анимацию печати
+                if (commentsScreen.classList.contains('active')) {
+                    const headerTitle = document.getElementById('comments-header-title');
+                    const headerStatus = document.getElementById('comments-header-status');
+                    
+                    headerTitle.innerText = nextUser.name;
+                    headerStatus.innerText = "печатает...";
+                    headerStatus.style.color = "var(--tg-blue)";
+                    
+                    clearTimeout(typingTimeout);
+                    typingTimeout = setTimeout(() => {
+                        generateComment(true, nextUser, phrase);
+                        resetCommentsHeader();
+                        scheduleNext();
+                    }, 1500 + Math.random() * 1500); // Имитация времени на печать
+                } else {
+                    // Если мы на другой странице, коммент генерится тихо на фоне
+                    generateComment(false, nextUser, phrase);
+                    scheduleNext();
+                }
+            };
+
+            const scheduleNext = () => {
+                // Следующий коммент прилетит через 5-9 секунд
+                setTimeout(loop, 5000 + Math.random() * 4000); 
+            };
+
+            scheduleNext();
+        }
 
         function switchPage(pageId) {
             document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
             document.getElementById(pageId).classList.add('active');
 
-            if (pageId === 'screen-comments') {
-                if (!liveChatInterval) {
-                    manageLiveStreamLoop();
-                }
-            } else {
-                clearInterval(liveChatInterval);
-                liveChatInterval = null;
-                clearTimeout(typingTimeout);
+            if (pageId !== 'screen-comments') {
                 resetCommentsHeader();
             }
-        }
-
-        // Логика печатания (один пользователь или мульти-режим)
-        function manageLiveStreamLoop() {
-            liveChatInterval = setInterval(() => {
-                const nextUser = randomUsers[Math.floor(Math.random() * randomUsers.length)];
-                
-                const headerTitle = document.getElementById('comments-header-title');
-                const headerStatus = document.getElementById('comments-header-status');
-                
-                // Шанс 40% на мульти-статус ("Настя и ещё 2 пишут...")
-                const isMultiTyping = Math.random() < 0.4;
-
-                if (isMultiTyping) {
-                    const extraCount = Math.floor(Math.random() * 4) + 2; // от 2 до 5 человек
-                    let humanizedEnding = "человека";
-                    if (extraCount === 5) humanizedEnding = "человек";
-                    
-                    headerTitle.innerText = "Комментарии";
-                    headerStatus.innerText = `${nextUser.name} и ещё ${extraCount} ${humanizedEnding} печатают...`;
-                } else {
-                    // Одиночный режим
-                    headerTitle.innerText = nextUser.name;
-                    headerStatus.innerText = "печатает...⚙️";
-                }
-                
-                headerStatus.style.color = "var(--tg-blue)";
-
-                // Публикуем коммент через 1.6 секунды после начала статуса
-                typingTimeout = setTimeout(() => {
-                    generateComment(true, nextUser);
-                    resetCommentsHeader();
-                }, 1600);
-
-            }, 3800); 
         }
 
         function resetCommentsHeader() {
@@ -663,16 +644,16 @@
             if (headerTitle && headerStatus) {
                 headerTitle.innerText = "Комментарии";
                 headerStatus.innerText = "Adapter by metaploit";
-                headerStatus.style.color = "var(--tg-gray)";
+                headerStatus.style.color = "var(--tg-blue)";
             }
         }
 
-        function generateComment(autoScroll = false, specificUser = null) {
+        function generateComment(autoScroll = false, specificUser = null, customText = null) {
             const container = document.getElementById('comments-container');
             if (!container) return;
             
             const user = specificUser || randomUsers[Math.floor(Math.random() * randomUsers.length)];
-            const text = randomPhrases[Math.floor(Math.random() * randomPhrases.length)];
+            const text = customText || randomPhrases[Math.floor(Math.random() * randomPhrases.length)];
             const letter = user.name.charAt(0).toUpperCase();
             const commentId = "com-" + Date.now() + "-" + Math.floor(Math.random() * 1000);
 
@@ -686,6 +667,7 @@
             const item = document.createElement('div');
             item.className = 'comment-item';
             item.setAttribute('onclick', `openUserProfile('${commentId}')`);
+
             item.innerHTML = `
                 <div class="comment-avatar" style="background: ${user.color};">${letter}</div>
                 <div class="comment-content">
@@ -697,13 +679,13 @@
 
             if (autoScroll) {
                 const page = document.getElementById('screen-comments');
+                // Скроллим вниз только если юзер был недалеко от конца
                 if (page.scrollHeight - page.scrollTop - page.clientHeight < 150) {
                     page.scrollTop = page.scrollHeight;
                 }
             }
         }
 
-        // Клик по пользователю — переход в профиль
         function openUserProfile(id) {
             const userData = activeCommentsDatabase[id];
             if (!userData) return;
@@ -722,6 +704,7 @@
             document.getElementById('prof-phone').innerText = "Скрыт";
             document.getElementById('prof-username').innerText = userData.tag;
             document.getElementById('prof-bio').innerText = userData.bio;
+            document.getElementById('prof-bdate-val').parentElement.style.display = 'none'; 
             
             document.getElementById('profile-channel-block').style.display = 'none';
 
@@ -746,6 +729,7 @@
             document.getElementById('prof-phone').innerText = "Неизвестно";
             document.getElementById('prof-username').innerText = "@metaploit";
             document.getElementById('prof-bio').innerText = "под программой защиты свидетелей";
+            document.getElementById('prof-bdate-val').parentElement.style.display = 'flex'; 
             
             document.getElementById('profile-channel-block').style.display = 'flex';
             
@@ -772,9 +756,9 @@
             }
         }
 
-        function sendChannelMessage() {
+        function sendChannelMessage(textRaw) {
             const input = document.getElementById('channel-msg-input');
-            const text = input.value.trim();
+            const text = (textRaw || input.value).trim();
             if (!text) return;
 
             const now = new Date();
@@ -785,6 +769,10 @@
             bubble.className = 'msg-bubble';
             bubble.innerHTML = `
                 <div class="msg-text"></div>
+                <div class="msg-comments-footer" onclick="switchPage('screen-comments')">
+                    <span>Прокомментировать</span>
+                    <span>0 ></span>
+                </div>
                 <div class="msg-meta">
                     <span class="msg-views">👁 1</span> 
                     <span class="msg-time">${timeStr}</span>
@@ -792,7 +780,11 @@
             `;
             bubble.querySelector('.msg-text').innerText = text;
             chatBody.appendChild(bubble);
-            chatBody.scrollTop = chatBody.scrollHeight;
+            
+            if (document.getElementById('screen-channel').classList.contains('active')) {
+                chatBody.scrollTop = chatBody.scrollHeight;
+            }
+            
             input.value = '';
         }
     </script>
