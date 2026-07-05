@@ -43,6 +43,53 @@
             /* Если фон слишком темный/светлый, можно подкрутить яркость здесь */
             filter: brightness(0.5) contrast(1.1); 
         }
+        <button class="music-btn" onclick="toggleMusic()">🔊 Музыка</button>
+    <audio id="bg-music" loop>
+        <source src="music.mp3" type="audio/mpeg">
+    </audio>
+
+<style>
+    .music-btn {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background: rgba(0, 0, 0, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: white;
+        padding: 6px 12px;
+        border-radius: 20px;
+        cursor: pointer;
+        font-size: 11px;
+        z-index: 1000;
+        backdrop-filter: blur(5px);
+        transition: 0.3s;
+    }
+    .music-btn:hover { background: rgba(36, 161, 222, 0.3); }
+</style>
+
+<script>
+    const music = document.getElementById('bg-music');
+    music.volume = 0.2; // Громкость 20%
+
+    function toggleMusic() {
+        const btn = document.querySelector('.music-btn');
+        if (music.paused) {
+            music.play();
+            btn.innerText = "🔇 Выкл";
+        } else {
+            music.pause();
+            btn.innerText = "🔊 Музыка";
+        }
+    }
+
+    // Автозапуск при первом клике на экран (обход защиты браузера)
+    document.addEventListener('click', () => {
+        if (music.paused) {
+            music.play().catch(() => {});
+        }
+    }, { once: true });
+</script>
+    }
 
         .telegram-screen {
             width: 100%;
